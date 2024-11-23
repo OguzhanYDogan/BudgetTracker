@@ -18,7 +18,18 @@ html.dark h6 {
     color: white;
 }
 
-html.dark input {
-    background-color: #232931;
+html.dark input, html.dark select, html.dark option {
+    background-color: #131921;
     border-color: #0f172a;
+}
+
+html, body {
+    height: 100%; /* Sayfa yüksekliği %100 */
+    margin: 0; /* Varsayılan margin'i kaldır */
+}
+  
+  body {
+    display: grid; /* Grid sistemi */
+    grid-template-rows: auto 1fr auto; /* Header, main-content ve footer sırasıyla yerleşsin */
+    height: 100%; /* Yüksekliği %100 yap */
 }

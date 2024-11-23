@@ -1,12 +1,30 @@
 "use client";
 
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
 
-const TransactionList = ({ transactions = [], type }) => { // Varsayılan değer boş dizi
+const TransactionList = ({ type }) => {
+    // Redux'tan gerekli state'leri çekiyoruz
+    const incomeList = useSelector((state) => state.budget.incomeList);
+    const expenseList = useSelector((state) => state.budget.expenseList);
+    const selectedYear = useSelector((state) => state.budget.selectedYear);
+    const selectedMonth = useSelector((state) => state.budget.selectedMonth);
+
+    // Türüne göre doğru listeyi seçiyoruz
+    const transactions = type === "income" ? incomeList : expenseList;
+
+    // Yıl ve aya göre filtreleme işlemi
+    const filteredTransactions = transactions.filter((transaction) => {
+        const transactionDate = new Date(transaction.date);
+        const yearMatches = transactionDate.getFullYear() === selectedYear;
+        const monthMatches = transactionDate.getMonth() === selectedMonth - 1; // Aylar 0 tabanlıdır
+        return yearMatches && monthMatches;
+    });
+
     return (
-        <ul className="px-4 rounded-xl bg-[#f2f2f2] dark:bg-[#232931] divide-y divide-gray-300 dark:divide-gray-400 transition-colors duration-500">
-            {transactions.length > 0 ? (
-                transactions.map((transaction, index) => (
+        <ul className="px-4 py-2 rounded-xl  text-slate-900 dark:text-[#c0c7d4] bg-[#f2f2f2] dark:bg-[#232931] divide-y divide-gray-300 dark:divide-gray-400 transition-colors duration-500">
+            {filteredTransactions.length > 0 ? (
+                filteredTransactions.map((transaction, index) => (
                     <li
                         key={index}
                         className="flex justify-between items-center py-2"
@@ -30,7 +48,6 @@ const TransactionList = ({ transactions = [], type }) => { // Varsayılan değer
                             </span>
                         </div>
                         <div>
-
                             {transaction.date
                                 ? format(new Date(transaction.date), "MM/dd/yyyy")
                                 : "Invalid date"}
@@ -40,8 +57,8 @@ const TransactionList = ({ transactions = [], type }) => { // Varsayılan değer
             ) : (
                 <p className="text-gray-500">
                     {type === "income"
-                        ? "No income added yet."
-                        : "No expenses added yet."}
+                        ? "No income added yet for this period."
+                        : "No expenses added yet for this period."}
                 </p>
             )}
         </ul>

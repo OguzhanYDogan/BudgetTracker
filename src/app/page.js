@@ -1,7 +1,8 @@
 "use client";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addIncome, addExpense, setIncomeList, setExpenseList } from "./store/budgetSlice";
+import { addIncome, addExpense, setIncomeList, setExpenseList, setSelectedYear, setSelectedMonth, } from "./store/budgetSlice";
+
 import { openIncomeModal, closeIncomeModal, openExpenseModal, closeExpenseModal } from "./store/modalSlice";
 import { useEffect } from "react";
 import Modal from "./components/Modal";
@@ -14,11 +15,11 @@ export default function Home() {
   const { isIncomeModalOpen, isExpenseModalOpen } = useSelector((state) => state.modal);
   const incomeList = useSelector((state) => state.budget.incomeList);
   const expenseList = useSelector((state) => state.budget.expenseList);
+  const filteredIncome = useSelector((state) => state.budget.getFilteredIncome);
+  const filteredExpenses = useSelector((state) => state.budget.getFilteredExpenses);
+  const selectedYear = useSelector((state) => state.budget.selectedYear);
+  const selectedMonth = useSelector((state) => state.budget.selectedMonth);
   const dispatch = useDispatch();
-
-  // Gelir ve giderleri hesapla
-  const totalIncome = incomeList.reduce((acc, item) => acc + item.amount, 0);
-  const totalExpenses = expenseList.reduce((acc, item) => acc + item.amount, 0);
 
   useEffect(() => {
     const savedIncome = JSON.parse(localStorage.getItem('incomeList')) || [];
@@ -46,7 +47,32 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 flex-1">
+      <div className="flex justify-center gap-4 mb-4 rounded-xl p-3 bg-[#f2f2f2] dark:bg-[#232931] transition-colors duration-500">
+        <h1 className="text-xl text-center font-normal mb-2">Select a date</h1>
+        <select
+          value={selectedYear}
+          onChange={(e) => dispatch(setSelectedYear(Number(e.target.value)))}
+          className="border p-2 rounded text-slate-900 dark:text-[#c0c7d4] transition-colors duration-500"
+        >
+          {Array.from({ length: 5 }, (_, i) => (
+            <option key={i} value={new Date().getFullYear() - i}>
+              {new Date().getFullYear() - i}
+            </option>
+          ))}
+        </select>
+        <select
+          value={selectedMonth}
+          onChange={(e) => dispatch(setSelectedMonth(Number(e.target.value)))}
+          className="border p-2 rounded text-slate-900 dark:text-[#c0c7d4] transition-colors duration-500"
+        >
+          {Array.from({ length: 12 }, (_, i) => (
+            <option key={i} value={i + 1}>
+              {new Date(0, i).toLocaleString("default", { month: "long" })}
+            </option>
+          ))}
+        </select>
+      </div>
       <BudgetChart />
 
       <div className="flex gap-3 justify-center mt-4 mb-2 ">
@@ -68,13 +94,13 @@ export default function Home() {
         {/* Gelir Listesi */}
         <div>
           <h2 className="text-2xl font-semibold text-center mb-4">Income</h2>
-          <TransactionList transactions={incomeList} type="income" />
+          <TransactionList transactions={filteredIncome} type="income" />
         </div>
 
         {/* Gider Listesi */}
         <div>
           <h2 className="text-2xl font-semibold text-center mb-4">Expenses</h2>
-          <TransactionList transactions={expenseList} type="expense" />
+          <TransactionList transactions={filteredExpenses} type="expense" />
         </div>
       </div>
 

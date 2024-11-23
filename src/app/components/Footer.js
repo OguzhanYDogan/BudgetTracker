@@ -2,7 +2,7 @@
 
 const Footer = () => {
     return (
-        <footer className="footer bg-[#f2f2f2] dark:bg-[#232931] text-neutral-content items-center p-8 mt-5">
+        <footer className="footer bg-[#f2f2f2] dark:bg-[#232931] text-neutral-content items-center p-8 mt-5 text-slate-900 dark:text-[#c0c7d4] transition-colors duration-500">
             <div className="grid grid-cols-2">
                 <aside className="grid-flow-col items-center ms-5">
                     <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
