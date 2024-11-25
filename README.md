@@ -2,12 +2,21 @@
 
 ## 📝 Project Description
 
-Budget Tracker Application is a user-friendly platform that helps users track their income and expenses, effectively managing their budget. It offers a modern interface and is optimized for both desktop and mobile devices. Key features include:
+The **Budget Tracker Application** is a user-friendly platform designed to help users effectively manage their income and expenses. It offers modern features for tracking, analyzing, and visualizing budgets. The application is optimized for both desktop and mobile devices, ensuring accessibility and ease of use.
 
-- **Add Income and Expenses**: Users can log their income and expenses by category.
-- **Graphical Visualization**: Income and expenses are displayed as side-by-side pie charts for clarity.
-- **Dark Mode Support**: Users can toggle between light and dark modes for a personalized experience.
-- **State Management with Redux**: All data is managed via Redux and stored in localStorage.
+---
+
+## 🌟 Features
+
+- **Add Income and Expenses**: Log income and expenses by category with detailed tracking.
+- **Graphical Visualization**: View income vs. expenses and expense categories as interactive pie charts.
+- **Monthly and Yearly Filters**: Filter data by month and year, with navigation for switching between periods.
+- **Local Storage Integration**: Save and persist budget data in local storage.
+- **Spending Limit Alerts**: Set monthly and yearly spending limits for expense categories, with alerts when 80% of a limit is reached.
+- **Dark Mode Support**: Toggle between light and dark modes for a personalized experience.
+- **State Management with Redux**: Centralized and efficient state management with persistence in local storage.
+- **Responsive Design**: Fully optimized for all screen sizes, from mobile to desktop.
+- **User-Friendly UI**: Intuitive and visually appealing interface built with Tailwind CSS.
 
 ---
 
@@ -48,15 +57,6 @@ The project uses the following key packages:
 
 Refer to the package.json file for the complete list of dependencies.
 
-## 🌟 Features
-
-- **Dark Mode Support**: Seamless light and dark theme toggle with smooth transitions.
-- **Budget Tracking**: Add, edit, and delete income and expense entries.
-- **Category-Based Expense Visualization**: Visualize expenses by category using Pie Charts.
-- **Local Storage Integration**: Save and persist budget data in local storage.
-- **Responsive Design**: Fully responsive layout for both desktop and mobile views.
-- **Redux State Management**: Centralized and efficient state management with Redux.
-- **User-Friendly UI**: Intuitive interface built with Tailwind CSS.
 
 ## 🛠 Project Structure
 The directory structure is as follows:
