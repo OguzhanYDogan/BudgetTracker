@@ -5,8 +5,8 @@ import themeReducer from "./themeSlice";
 
 const store = configureStore({
     reducer: {
-        modal: modalReducer, // Modal slice
-        budget: budgetReducer, // Budget slice
+        modal: modalReducer,
+        budget: budgetReducer,
         theme: themeReducer,
     },
 });

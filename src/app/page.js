@@ -1,31 +1,34 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
-import { addIncome, addExpense, setIncomeList, setExpenseList, setSelectedYear, setSelectedMonth, } from "./store/budgetSlice";
-
-import { openIncomeModal, closeIncomeModal, openExpenseModal, closeExpenseModal } from "./store/modalSlice";
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setIncomeList, setExpenseList, setSelectedYear, setSelectedMonth, setLimit } from "./store/budgetSlice";
+import { openIncomeModal, closeIncomeModal, openExpenseModal, closeExpenseModal, openCategoryLimitModal } from "./store/modalSlice";
 import Modal from "./components/Modal";
+import CategoryLimitModal from "./components/CategoryLimitModal";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import BudgetChart from "./components/BudgetChart";
-import Header from "./components/Header";
+import CategoryLimitWarning from "./components/CategoryLimitWarning";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const { isIncomeModalOpen, isExpenseModalOpen } = useSelector((state) => state.modal);
   const incomeList = useSelector((state) => state.budget.incomeList);
   const expenseList = useSelector((state) => state.budget.expenseList);
-  const filteredIncome = useSelector((state) => state.budget.getFilteredIncome);
-  const filteredExpenses = useSelector((state) => state.budget.getFilteredExpenses);
   const selectedYear = useSelector((state) => state.budget.selectedYear);
   const selectedMonth = useSelector((state) => state.budget.selectedMonth);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const savedIncome = JSON.parse(localStorage.getItem('incomeList')) || [];
     const savedExpenses = JSON.parse(localStorage.getItem('expenseList')) || [];
     dispatch(setIncomeList(savedIncome));
     dispatch(setExpenseList(savedExpenses));
+    const savedLimits = JSON.parse(localStorage.getItem("categoryLimits")) || {};
+    for (const category in savedLimits) {
+      const { monthly, yearly } = savedLimits[category];
+      dispatch(setLimit({ category, monthly, yearly }));
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -35,16 +38,6 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem('expenseList', JSON.stringify(expenseList));
   }, [expenseList]);
-
-  const handleAddIncome = (income) => {
-    dispatch(addIncome(income));
-    dispatch(closeIncomeModal()); // Modalı kapat
-  };
-
-  const handleAddExpense = (expense) => {
-    dispatch(addExpense(expense));
-    dispatch(closeExpenseModal()); // Modalı kapat
-  };
 
   return (
     <div className="container mx-auto p-4 flex-1">
@@ -88,33 +81,47 @@ export default function Home() {
         >
           Add Expense
         </button>
-      </div>
+        {/* Limit Ayarlama Butonu */}
+        <button
+          onClick={() => dispatch(openCategoryLimitModal())}
+          className="bg-yellow-500 text-white px-4 py-2 rounded"
+        >
+          Set Category Limits
+        </button>
 
+
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Gelir Listesi */}
         <div>
           <h2 className="text-2xl font-semibold text-center mb-4">Income</h2>
-          <TransactionList transactions={filteredIncome} type="income" />
+          <TransactionList type="income" />
         </div>
 
         {/* Gider Listesi */}
         <div>
           <h2 className="text-2xl font-semibold text-center mb-4">Expenses</h2>
-          <TransactionList transactions={filteredExpenses} type="expense" />
+          <TransactionList type="expense" />
         </div>
       </div>
 
       {/* Gelir Modal */}
       <Modal isOpen={isIncomeModalOpen} onClose={() => dispatch(closeIncomeModal())}>
         <h2 className="text-lg font-semibold mb-4">Add Income</h2>
-        <TransactionForm type="income" onAdd={handleAddIncome} onClose={() => dispatch(closeIncomeModal())} />
+        <TransactionForm type="income" onClose={() => dispatch(closeIncomeModal())} />
       </Modal>
 
       {/* Gider Modal */}
       <Modal isOpen={isExpenseModalOpen} onClose={() => dispatch(closeExpenseModal())}>
         <h2 className="text-lg font-semibold mb-4">Add Expense</h2>
-        <TransactionForm type="expense" onAdd={handleAddExpense} onClose={() => dispatch(closeExpenseModal())} />
+        <TransactionForm type="expense" onClose={() => dispatch(closeExpenseModal())} />
       </Modal>
+
+      {/* Limit Modal */}
+      <CategoryLimitModal />
+
+      <CategoryLimitWarning />
     </div>
   );
 }
+

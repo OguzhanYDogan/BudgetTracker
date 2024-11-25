@@ -21,15 +21,61 @@ html.dark h6 {
 html.dark input, html.dark select, html.dark option {
     background-color: #131921;
     border-color: #0f172a;
+    transition-duration: 500ms;
 }
 
 html, body {
-    height: 100%; /* Sayfa yüksekliği %100 */
-    margin: 0; /* Varsayılan margin'i kaldır */
+    height: 100%;
+    margin: 0;
 }
   
   body {
-    display: grid; /* Grid sistemi */
-    grid-template-rows: auto 1fr auto; /* Header, main-content ve footer sırasıyla yerleşsin */
-    height: 100%; /* Yüksekliği %100 yap */
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
 }
+
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition-duration: 500ms;
+}
+
+html.dark .alert {
+    color: #dc2626;
+    background-color: #232931;
+    border: 1px solid #232931;
+}
+
+.warning-divider {
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem; /* text-sm */
+    color: #4a5568; /* text-gray-800 */
+    text-align: center;
+    transition-duration: 500ms;
+}
+
+.warning-divider::before,
+.warning-divider::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid #e2e8f0; /* border-gray-200 */
+    margin: 0 1.5rem; /* ms-6 / me-6 */
+}
+
+.dark .warning-divider {
+    color: #ffffff; /* text-white */
+}
+
+.dark .warning-divider::before,
+.dark .warning-divider::after {
+    border-color: #4a5568; /* border-neutral-600 */
+}
+

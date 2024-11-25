@@ -1,5 +1,6 @@
 "use client";
 
+
 const Modal = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
@@ -8,7 +9,7 @@ const Modal = ({ isOpen, onClose, children }) => {
             <div className="bg-slate-50 dark:bg-[#1d232a] w-96 p-6 rounded shadow-lg relative">
                 {/* Kapatma Butonu */}
                 <button
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                    className="absolute text-2xl top-2 right-2 text-gray-500 hover:text-gray-800"
                     onClick={onClose}
                 >
                     ×

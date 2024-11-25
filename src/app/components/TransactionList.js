@@ -22,7 +22,7 @@ const TransactionList = ({ type }) => {
     });
 
     return (
-        <ul className="px-4 py-2 rounded-xl  text-slate-900 dark:text-[#c0c7d4] bg-[#f2f2f2] dark:bg-[#232931] divide-y divide-gray-300 dark:divide-gray-400 transition-colors duration-500">
+        <ul className="px-4 py-2 rounded-xl text-slate-900 dark:text-[#c0c7d4] bg-[#f2f2f2] dark:bg-[#232931] divide-y divide-gray-300 dark:divide-gray-400 transition-colors duration-500">
             {filteredTransactions.length > 0 ? (
                 filteredTransactions.map((transaction, index) => (
                     <li

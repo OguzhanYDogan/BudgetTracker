@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isIncomeModalOpen: false,
     isExpenseModalOpen: false,
+    isCategoryLimitModalOpen: false, // Yeni eklenen durum
 };
 
 const modalSlice = createSlice({
@@ -21,6 +22,12 @@ const modalSlice = createSlice({
         closeExpenseModal(state) {
             state.isExpenseModalOpen = false;
         },
+        openCategoryLimitModal(state) {
+            state.isCategoryLimitModalOpen = true;
+        },
+        closeCategoryLimitModal(state) {
+            state.isCategoryLimitModalOpen = false;
+        },
     },
 });
 
@@ -29,6 +36,7 @@ export const {
     closeIncomeModal,
     openExpenseModal,
     closeExpenseModal,
+    openCategoryLimitModal,
+    closeCategoryLimitModal,
 } = modalSlice.actions;
-
 export default modalSlice.reducer;

@@ -5,6 +5,14 @@ const initialState = {
     expenseList: [],
     selectedYear: new Date().getFullYear(),
     selectedMonth: new Date().getMonth() + 1,
+    limits: {
+        Food: { monthly: 2500, yearly: 30000 },
+        Transport: { monthly: 3000, yearly: 36000 },
+        Rent: { monthly: 10000, yearly: 120000 },
+        Entertainment: { monthly: 1200, yearly: 14400 },
+        Bill: { monthly: 4000, yearly: 48000 },
+        Other: { monthly: 1000, yearly: 12000 },
+    },
 };
 
 const budgetSlice = createSlice({
@@ -29,6 +37,13 @@ const budgetSlice = createSlice({
         setSelectedMonth: (state, action) => {
             state.selectedMonth = action.payload;
         },
+        setLimit(state, action) {
+            const { category, monthly, yearly } = action.payload;
+            if (state.limits[category]) {
+                state.limits[category] = { monthly, yearly };
+            } -
+                localStorage.setItem("categoryLimits", JSON.stringify(state.limits));
+        },
     },
 });
 
@@ -39,6 +54,7 @@ export const {
     setExpenseList,
     setSelectedYear,
     setSelectedMonth,
+    setLimit
 } = budgetSlice.actions;
 
 export default budgetSlice.reducer;

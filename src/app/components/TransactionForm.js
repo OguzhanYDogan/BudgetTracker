@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import expenseCategories from "../utils/categories";
+import { addIncome, addExpense } from "../store/budgetSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { closeIncomeModal, closeExpenseModal } from "../store/modalSlice";
 
-const TransactionForm = ({ onAdd, type, onClose }) => {
+const TransactionForm = ({ type, onClose }) => {
+  const dispatch = useDispatch();
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
@@ -23,12 +27,32 @@ const TransactionForm = ({ onAdd, type, onClose }) => {
       date,
       ...(type === "expense" && { category }),
     };
-    onAdd(transaction);
+    if (type === "expense") {
+      handleAddExpense(transaction);
+    }
+    else {
+      handleAddIncome(transaction);
+    }
     setDescription("");
     setAmount("");
     setDate("");
     if (type === "expense") setCategory(expenseCategories[0]);
-    if (onClose) onClose();
+    if (type === "expense") {
+      closeExpenseModal();
+    }
+    else {
+      closeIncomeModal();
+    }
+  };
+
+  const handleAddIncome = (income) => {
+    dispatch(addIncome(income));
+    dispatch(closeIncomeModal()); // Modalı kapat
+  };
+
+  const handleAddExpense = (expense) => {
+    dispatch(addExpense(expense));
+    dispatch(closeExpenseModal()); // Modalı kapat
   };
 
   return (
