@@ -51,6 +51,9 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <title>Piggy Bank</title>
+      </head>
       <body className="bg-slate-50 dark:bg-[#1d232a] text-slate-900 dark:text-[#c0c7d4] transition-colors duration-500">
         <Header />
         <Provider store={store}>

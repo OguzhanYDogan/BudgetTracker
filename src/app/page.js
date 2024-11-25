@@ -41,8 +41,8 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4 flex-1">
-      <div className="flex justify-center gap-4 mb-4 rounded-xl p-3 bg-[#f2f2f2] dark:bg-[#232931] transition-colors duration-500">
-        <h1 className="text-xl text-center font-normal mb-2">Select a date</h1>
+      <div className="flex justify-center items-center gap-4 mb-4 rounded-xl p-3 bg-[#f2f2f2] dark:bg-[#232931] transition-colors duration-500">
+        <h1 className="text-xl text-center font-normal">Select a date:</h1>
         <select
           value={selectedYear}
           onChange={(e) => dispatch(setSelectedYear(Number(e.target.value)))}
@@ -71,22 +71,22 @@ export default function Home() {
       <div className="flex gap-3 justify-center mt-4 mb-2 ">
         <button
           onClick={() => dispatch(openIncomeModal())} // Gelir modalını aç
-          className="bg-green-500 text-white px-4 py-2 rounded"
+          className="bg-green-500 text-white px-3 py-2 rounded"
         >
           Add Income
-        </button>
-        <button
-          onClick={() => dispatch(openExpenseModal())} // Gider modalını aç
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
-          Add Expense
         </button>
         {/* Limit Ayarlama Butonu */}
         <button
           onClick={() => dispatch(openCategoryLimitModal())}
-          className="bg-yellow-500 text-white px-4 py-2 rounded"
+          className="bg-yellow-500 text-white px-3 py-2 rounded"
         >
           Set Category Limits
+        </button>
+        <button
+          onClick={() => dispatch(openExpenseModal())} // Gider modalını aç
+          className="bg-red-500 text-white px-3 py-2 rounded"
+        >
+          Add Expense
         </button>
 
 

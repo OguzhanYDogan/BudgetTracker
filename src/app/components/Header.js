@@ -11,7 +11,7 @@ const Header = () => {
                 </g>
             </svg>
             <h1 className="text-5xl text-center py-6 text-black dark:text-white">
-                Budget Tracker
+                Piggy Bank
             </h1>
         </div>
     );

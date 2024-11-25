@@ -6,7 +6,7 @@ import { addIncome, addExpense } from "../store/budgetSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { closeIncomeModal, closeExpenseModal } from "../store/modalSlice";
 
-const TransactionForm = ({ type, onClose }) => {
+const TransactionForm = ({ type }) => {
   const dispatch = useDispatch();
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
@@ -109,7 +109,7 @@ const TransactionForm = ({ type, onClose }) => {
         </button>
         <button
           type="button"
-          onClick={onClose}
+          onClick={() => type === "expense" ? closeExpenseModal() : closeIncomeModal()}
           className="ml-2 bg-red-500 text-white px-4 py-2 rounded"
         >
           Cancel
